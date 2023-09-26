@@ -1,66 +1,188 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JSTask8</title>
-  <style>
-    body {
-      background-color: #000;
-      overflow: hidden;
-    }
+    <title>JSTask11</title>
+    <style>
+        
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid black;
+            background-color: aquamarine;
+        }
 
-    .snowflake {
-      position: absolute;
-      top: -30px;
-      font-size: 30px;
-      color: #fff;
-      animation: snowfall 5s linear infinite;
-    }
+        .form-container h2 {
+            color: darkblue;
+            text-align: center;
+        }
 
-    @keyframes snowfall {
-      0% {
-        transform: translateY(-50px);
-      }
-      100% {
-        transform: translateY(100vh);
-      }
-    }
-  </style>
+        .form-container label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="email"],
+        .form-container input[type="number"],
+        .form-container textarea,
+        .form-container select {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        .form-container .checkbox-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-container .checkbox-group input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .form-container .strength {
+            font-size: 12px;
+            margin-left: 5px;
+            color: gray;
+        }
+
+        .form-container .good {
+            color: green;
+        }
+
+        .form-container .poor {
+            color: red;
+        }
+
+        .form-container button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="snowfall"></div>
-  <button id="startBtn">Start Animation</button>
-  <button id="stopBtn">Stop Animation</button>
+    <div class="form-container">
+        <h2>Registration Form</h2>
+        <label>First Name :</label>
+        <input type="text" name="FN">
+        <span class="strength"></span>
 
-  <script>
-    let animationIntervalId;
+        <label>Last Name :</label>
+        <input type="text" name="LN">
+        <span class="strength"></span>
 
-    function createSnowflake() {
-      const snowflake = document.createElement('span');
-      snowflake.classList.add('snowflake');
-      snowflake.innerHTML = '&#10052;';
-      snowflake.style.left = Math.random() * window.innerWidth + 'px';
-      document.getElementById('snowfall').appendChild(snowflake);
+        <label>Email :</label>
+        <input type="email" name="Em">
+        <span class="strength"></span>
 
-      setTimeout(() => {
-        snowflake.remove();
-      }, 5000);
-    }
+        <label>Gender :</label>
+        <input type="radio" name="option" value="option1" onclick="updateStrength(this)"> Male
+        <br>
+        <input type="radio" name="option" value="option2" onclick="updateStrength(this)"> Female
+        <br>
+        <input type="radio" name="option" value="option3" onclick="updateStrength(this)"> Other
+        <span class="strength"></span>
 
-    function startSnowfall() {
-      animationIntervalId = setInterval(() => {
-        createSnowflake();
-      }, 200);
-    }
+        <label>Age :</label>
+        <input type="number" name="Ag">
+        <span class="strength"></span>
 
-    function stopSnowfall() {
-      clearInterval(animationIntervalId);
-      document.getElementById('snowfall').innerHTML = '';
-    }
+        <label>Phone Number :</label>
+        <input type="number" name="Ph">
+        <span class="strength"></span>
 
-    document.getElementById('startBtn').addEventListener('click', startSnowfall);
-    document.getElementById('stopBtn').addEventListener('click', stopSnowfall);
-  </script>
+        <label>Address :</label>
+        <textarea name="Ad" cols="50" rows="5"></textarea>
+        <span class="strength"></span>
+
+        <label>State :</label>
+        <input type="text" name="St">
+        <span class="strength"></span>
+
+        <label>Country :</label>
+        <select>
+            <option>Select Country</option>
+            <option value="In">India</option>
+            <option value="Bn">Bangladesh</option>
+            <option value="Pk">Pakistan</option>
+            <option value="Nl">Nepal</option>
+            <option value="Sl">Srilanka</option>
+            <option value="Ch">China</option>
+        </select>
+        <span class="strength"></span>
+
+        <label>Languages Known :</label>
+        <div class="checkbox-group">
+            <input type="checkbox" name="l1" onclick="updateStrength(this)">
+            <label>Telugu</label>
+            <input type="checkbox" name="l2" onclick="updateStrength(this)">
+            <label>English</label>
+            <input type="checkbox" name="l3" onclick="updateStrength(this)">
+            <label>Hindi</label>
+            <input type="checkbox" name="l4" onclick="updateStrength(this)">
+            <label>Kannada</label>
+        </div>
+        <span class="strength"></span>
+
+        <input type="checkbox" name="l1">
+        <label>Hereby I declare that all the given details are true</label>
+        <span class="strength"></span>
+
+        <p>Login to <a href="https://ethnus.com/" target="_blank">Ethnus</a> website</p>
+
+        <div style="text-align: center;">
+            <button onclick="SubmitEvent()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        function SubmitEvent() {
+            var inputs = document.getElementsByTagName('input');
+            var strengthLabels = document.getElementsByClassName('strength');
+
+            for (var i = 0; i < inputs.length; i++) {
+                var input = inputs[i];
+                var strengthLabel = strengthLabels[i];
+
+                if (input.value.length >= 6) {
+                    strengthLabel.textContent = 'Good';
+                    strengthLabel.classList.remove('poor');
+                    strengthLabel.classList.add('good');
+                } else {
+                    strengthLabel.textContent = 'Poor';
+                    strengthLabel.classList.remove('good');
+                    strengthLabel.classList.add('poor');
+                }
+            }
+        }
+
+        function updateStrength(element) {
+            var strengthLabel = element.nextElementSibling.nextElementSibling;
+            
+            if (element.checked) {
+                strengthLabel.textContent = 'Good';
+                strengthLabel.classList.remove('poor');
+                strengthLabel.classList.add('good');
+            } else {
+                strengthLabel.textContent = 'Poor';
+                strengthLabel.classList.remove('good');
+                strengthLabel.classList.add('poor');
+            }
+        }
+    </script>
 </body>
+
 </html>
